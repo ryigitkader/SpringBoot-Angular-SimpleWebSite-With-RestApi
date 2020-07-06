@@ -23,6 +23,7 @@
     "angular-webstorage-service": "^1.0.2",
     "bootstrap": "^4.5.0",
     "jquery": "^3.5.1",
+    "ngx-toastr": "^12.1.0",
     "ngx-webstorage": "^5.0.0",
     "ngx-webstorage-service": "^4.1.0",
     "popper.js": "^1.16.1",

@@ -14,6 +14,14 @@ export class AuthService {
 
   url:string = "http://localhost:8080/api/auth/";
 
+  refreshTokenPayload = {
+    refreshToken: this.getRefreshToken(),
+    username: this.getUserName()
+  }
+
+
+
+
   constructor(private httpClient:HttpClient, private localStorage:LocalStorageService) { 
 
   }
@@ -42,4 +50,34 @@ export class AuthService {
 
 
 
+  getJwtToken(){
+
+    
+    return this.localStorage.retrieve('authenticationToken');
+  }
+
+
+
+  refreshToken() {
+    return this.httpClient.post<LoginResponsePayload>(this.url+'refresh/token', this.refreshTokenPayload)
+      .pipe(tap(response => {
+        this.localStorage.clear('authenticationToken');
+        this.localStorage.clear('expiresAt');
+
+        this.localStorage.store('authenticationToken',
+          response.authenticationToken);
+        this.localStorage.store('expiresAt', response.expiresAt);
+      }));
+  }
+
+
+
+
+
+  getUserName() {
+    return this.localStorage.retrieve('username');
+  }
+  getRefreshToken() {
+    return this.localStorage.retrieve('refreshToken');
+  }
 }
