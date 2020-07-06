@@ -1,9 +1,6 @@
 package com.yigitk.digitus.controller;
 
-import com.yigitk.digitus.dto.AuthenticationResponse;
-import com.yigitk.digitus.dto.LoginRequest;
-import com.yigitk.digitus.dto.RefreshTokenRequest;
-import com.yigitk.digitus.dto.RegisterRequest;
+import com.yigitk.digitus.dto.*;
 import com.yigitk.digitus.service.AuthService;
 import com.yigitk.digitus.service.RefreshTokenService;
 import lombok.AllArgsConstructor;
@@ -46,6 +43,22 @@ public class AuthController {
 
     }
 
+    @PostMapping("/renewPassword/{token}")
+    public void renewPassword(@PathVariable String token,@RequestBody RenewPasswordRequest renewPasswordRequest){
+
+        authService.renewPassword(token,renewPasswordRequest);
+
+    }
+
+    @PostMapping("/renewPasswordMail")
+    public void renewMailPassword(@RequestBody MailPasswordRequest mailPasswordRequest){
+
+        authService.renewPasswordMail(mailPasswordRequest);
+    }
+
+
+
+
     @PostMapping("refresh/token")
     public AuthenticationResponse refreshTokens(@Valid @RequestBody RefreshTokenRequest refreshTokenRequest){
 
@@ -61,10 +74,6 @@ public class AuthController {
     }
 
 
-    //FIX here
-    @PostMapping("/renewPassword/{token}")
-    public void renewPassword(@PathVariable String token){
 
-    }
 
 }

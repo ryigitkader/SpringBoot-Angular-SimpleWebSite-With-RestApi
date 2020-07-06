@@ -1,9 +1,6 @@
 package com.yigitk.digitus.service;
 
-import com.yigitk.digitus.dto.AuthenticationResponse;
-import com.yigitk.digitus.dto.LoginRequest;
-import com.yigitk.digitus.dto.RefreshTokenRequest;
-import com.yigitk.digitus.dto.RegisterRequest;
+import com.yigitk.digitus.dto.*;
 import com.yigitk.digitus.exception.DigitusException;
 import com.yigitk.digitus.model.NotificationMail;
 import com.yigitk.digitus.model.User;
@@ -62,6 +59,63 @@ public class AuthService {
 
     }
 
+
+    public void renewPasswordMail(MailPasswordRequest mailPasswordRequest){
+
+
+        String token = generateRenewPasswordToken(mailPasswordRequest);
+        mailService.sendMail(new NotificationMail("Renew your password",mailPasswordRequest.getMail(),
+                "" +
+                        "click on the below url to restart your password : " +
+                        "http://localhost:8080/api/auth/renewPassword/"+token+" "));
+
+
+    }
+
+    public void renewPassword(String token, RenewPasswordRequest renewPasswordRequest){
+
+
+        verifyRenewPassword(token,renewPasswordRequest);
+    }
+
+
+    public void verifyRenewPassword(String token,RenewPasswordRequest renewPasswordRequest) {
+
+        Optional<VerificationToken> verificationToken = verificationTokenRepository.findByToken(token);
+        verificationToken.orElseThrow(()->new DigitusException("Invalid token"));
+        fetchUserAndEnable(verificationToken.get());
+        fetchUserAndRenewPassword(verificationToken.get(),renewPasswordRequest);
+    }
+
+    @Transactional
+    public void fetchUserAndRenewPassword(VerificationToken verificationToken,RenewPasswordRequest renewPasswordRequest) {
+
+        String username = verificationToken.getUser().getUsername();
+        User user = userRepository.findByUsername(username)
+                .orElseThrow(() -> new DigitusException("No user found with name - " + username));
+        user.setPassword(passwordEncoder.encode(renewPasswordRequest.getPassword()));
+        userRepository.save(user);
+    }
+
+
+
+    private String generateRenewPasswordToken(MailPasswordRequest mailPasswordRequest){
+
+        String token = UUID.randomUUID().toString();
+        String email = mailPasswordRequest.getMail();
+        Optional<User> userOptional = userRepository.findByEmail(email);
+        User user =userOptional.orElseThrow(()->new DigitusException("not found email with - "+email));
+
+        VerificationToken verificationToken = new VerificationToken();
+        verificationToken.setToken(token);
+        verificationToken.setUser(user);
+
+        verificationTokenRepository.save(verificationToken);
+
+        return token;
+    }
+
+
     private String generateVerificationToken(User user) {
 
         String token = UUID.randomUUID().toString();
@@ -91,6 +145,10 @@ public class AuthService {
 
         userRepository.save(user);
     }
+
+
+
+
 
     public AuthenticationResponse login(LoginRequest loginRequest) {
 
