@@ -51,7 +51,12 @@ export class SignupComponent implements OnInit {
 
     this.authService.signup(this.signupRequestPayload)
                     .subscribe(data => {
-                      console.log(data);
+                      if(data){
+                        console.log(data);  
+                      }
+                      else{
+                        console.log("Registration failed");
+                      }
                     });
                   
     
