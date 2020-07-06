@@ -4,6 +4,7 @@ import { SignupRequestPayload } from './signup-request.payload';
 import { AuthService } from '../shared/auth.service';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
+import { error } from '@angular/compiler/src/util';
 
 
 
@@ -56,10 +57,12 @@ export class SignupComponent implements OnInit {
 
 
     this.authService.signup(this.signupRequestPayload)
-                    .subscribe(() => {
-                     this.router.navigate(['/login'],{queryParams:{registered:true}});
-                    }, ()=>{
-                       this.toastr.error('Registration Failed');
+                    .subscribe(data => {
+                     this.router.navigate(['/login'],
+                     {queryParams:{registered:true}});
+                    }, error => {
+                      console.log('Registration Failed')
+                       this.toastr.error('Registration Failed, try again');
                     } );
                   
     
