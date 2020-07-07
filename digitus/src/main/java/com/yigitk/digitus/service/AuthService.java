@@ -67,7 +67,7 @@ public class AuthService {
         mailService.sendMail(new NotificationMail("Renew your password",mailPasswordRequest.getMail(),
                 "" +
                         "click on the below url to restart your password : " +
-                        "http://localhost:8080/api/auth/renewPassword/"+token+" "));
+                        "http://localhost:4200/renew-password/"+token+" "));
 
 
     }

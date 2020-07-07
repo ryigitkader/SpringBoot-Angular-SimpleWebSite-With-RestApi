@@ -14,6 +14,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { LoginComponent } from './auth/login/login.component';
 import { HomeComponent } from './home/home.component';
 import { ForgotpasswordComponent } from './auth/forgotpassword/forgotpassword.component';
+import { RenewpasswordComponent } from './renewpassword/renewpassword.component';
 
 @NgModule({
   declarations: [
@@ -22,7 +23,8 @@ import { ForgotpasswordComponent } from './auth/forgotpassword/forgotpassword.co
     SignupComponent,
     LoginComponent,
     HomeComponent,
-    ForgotpasswordComponent
+    ForgotpasswordComponent,
+    RenewpasswordComponent
   ],
   imports: [
     BrowserModule,

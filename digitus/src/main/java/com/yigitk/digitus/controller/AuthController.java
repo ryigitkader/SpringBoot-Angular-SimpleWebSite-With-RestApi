@@ -44,10 +44,11 @@ public class AuthController {
     }
 
     @PostMapping("/renewPassword/{token}")
-    public void renewPassword(@PathVariable String token,@RequestBody RenewPasswordRequest renewPasswordRequest){
+    public ResponseEntity<String> renewPassword(@PathVariable String token, @RequestBody RenewPasswordRequest renewPasswordRequest){
 
         authService.renewPassword(token,renewPasswordRequest);
 
+        return new ResponseEntity<>("Password reset with new password ", HttpStatus.OK);
     }
 
     @PostMapping("/renewPasswordMail")

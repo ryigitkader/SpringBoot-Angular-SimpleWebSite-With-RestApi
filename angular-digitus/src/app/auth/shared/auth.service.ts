@@ -7,6 +7,7 @@ import { LoginResponsePayload } from '../login/login-response.payload';
 import {LocalStorageService} from 'ngx-webstorage';
 import { map, tap } from 'rxjs/operators';
 import { ForgotpasswordRequestPayload } from '../forgotpassword/forgotpassword-request.payload';
+import { RenewpasswordRequestPayload } from 'src/app/renewpassword/renewpassword-request.payload';
 
 @Injectable({
   providedIn: 'root'
@@ -51,10 +52,15 @@ export class AuthService {
 
   forgotPassword(forgotpasswordRequestPayload:ForgotpasswordRequestPayload):Observable<any>{
 
-    console.log("authservice parola : " +forgotpasswordRequestPayload.mail);
+    //console.log("authservice parola : " +forgotpasswordRequestPayload.mail);
     return this.httpClient.post(this.url+"renewPasswordMail",forgotpasswordRequestPayload,{responseType:'text'});
   }
 
+
+  renewPassword(token:string,renewpasswordRequestPayload:RenewpasswordRequestPayload):Observable<any>{
+
+    return this.httpClient.post(this.url+"renewPassword/"+token,renewpasswordRequestPayload,{responseType:'text'});
+  }
 
 
 
