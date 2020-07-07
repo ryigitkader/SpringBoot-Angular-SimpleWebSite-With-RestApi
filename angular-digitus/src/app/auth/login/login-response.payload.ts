@@ -4,5 +4,6 @@ export interface LoginResponsePayload{
     refreshToken:string;
     expiresAt:string;
     username:string;
+    admin:string;
 
 }

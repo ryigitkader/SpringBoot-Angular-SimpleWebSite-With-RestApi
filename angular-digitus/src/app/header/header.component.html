@@ -8,8 +8,16 @@
       </a>
     </div>
     <div class="flex-grow-1 float-right">
-      <a routerLink="/sign-up" class="float-right signup mr-2">Sign up</a>
-      <a routerLink="/login" class="float-right login mr-2">Login</a>
+      <div *ngIf="!isLoggedIn">
+        <a routerLink="/sign-up" class="float-right signup mr-2">Sign up</a>
+        <a routerLink="/login" class="float-right login mr-2">Login</a>
+      </div>
+      <div *ngIf="isLoggedIn">
+        <a routerLink="/logout" class="float-right logout mr-2">Logout</a>
+        <div *ngIf="isAdmin">
+          <a routerLink="/admin" class="float-right login mr-2">Admin</a>
+        </div>
+      </div>
     </div>
   </nav>
 </header>

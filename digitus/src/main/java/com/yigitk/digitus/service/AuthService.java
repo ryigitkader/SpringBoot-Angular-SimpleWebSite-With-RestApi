@@ -33,6 +33,13 @@ public class AuthService {
     private final JwtProvider jwtProvider;
     private final RefreshTokenService refreshTokenService;
 
+    @Transactional(readOnly = true)
+    public User getCurrentUser() {
+        org.springframework.security.core.userdetails.User principal = (org.springframework.security.core.userdetails.User) SecurityContextHolder.
+                getContext().getAuthentication().getPrincipal();
+        return userRepository.findByUsername(principal.getUsername())
+                .orElseThrow(() -> new DigitusException("User name not found - " + principal.getUsername()));
+    }
 
     @Transactional
     public void signup(RegisterRequest registerRequest){
@@ -157,6 +164,7 @@ public class AuthService {
 
         SecurityContextHolder.getContext().setAuthentication(authenticate);
 
+
         String token = jwtProvider.generateToken(authenticate);
 
         return AuthenticationResponse.builder()
@@ -164,6 +172,7 @@ public class AuthService {
                 .refreshToken(refreshTokenService.generateRefreshToken().getToken())
                 .expiresAt(Instant.now().plusMillis(jwtProvider.getJwtExpirationInMillis()))
                 .username(loginRequest.getUsername())
+                .admin(getCurrentUser().isAdmin())
                 .build();
 
 

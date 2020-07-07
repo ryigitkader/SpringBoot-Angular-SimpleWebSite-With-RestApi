@@ -26,6 +26,12 @@ public class AuthController {
         return new ResponseEntity<>("User registration is successfull ", HttpStatus.OK);
     }
 
+    public ResponseEntity<String> adminSignUp(@RequestBody RegisterRequest registerRequest){
+
+        authService.adminSignup(registerRequest);
+        return new ResponseEntity<>("Admin registration is successfull ", HttpStatus.OK);
+    }
+
 
     @GetMapping("accountVerification/{token}")
     public ResponseEntity<String> verifyAccount(@PathVariable String token){
