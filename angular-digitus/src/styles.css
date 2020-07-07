@@ -5,3 +5,11 @@ input.ng-invalid.ng-touched{
 
     border: 1px solid red;
 }
+
+html{
+    padding: 0;
+    height: 100%;
+}
+body{
+    height: 100%;
+}

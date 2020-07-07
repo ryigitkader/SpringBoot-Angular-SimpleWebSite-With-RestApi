@@ -4,7 +4,6 @@ import { LoginRequestPayload } from './login-request.payload';
 import { AuthService } from '../shared/auth.service';
 import { ToastrService } from 'ngx-toastr';
 import { Router, ActivatedRoute } from '@angular/router';
-import { error } from '@angular/compiler/src/util';
 import { throwError } from 'rxjs';
 
 @Component({

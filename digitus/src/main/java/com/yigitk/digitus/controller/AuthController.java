@@ -51,9 +51,11 @@ public class AuthController {
     }
 
     @PostMapping("/renewPasswordMail")
-    public void renewMailPassword(@RequestBody MailPasswordRequest mailPasswordRequest){
+    public ResponseEntity<String> renewMailPassword(@RequestBody MailPasswordRequest mailPasswordRequest){
 
         authService.renewPasswordMail(mailPasswordRequest);
+
+        return new ResponseEntity<>("Reset password mail sent ", HttpStatus.OK);
     }
 
 
