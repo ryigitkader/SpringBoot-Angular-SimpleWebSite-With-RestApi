@@ -6,6 +6,8 @@ import { HomeComponent } from './home/home.component';
 import { ForgotpasswordComponent } from './auth/forgotpassword/forgotpassword.component';
 import { RenewpasswordComponent } from './renewpassword/renewpassword.component';
 import { AdminsignupComponent } from './auth/adminsignup/adminsignup.component';
+import { AdminpageComponent } from './adminpage/adminpage.component';
+import { AuthGuard } from './auth/auth.guard'
 
 
 const routes: Routes = [
@@ -14,6 +16,7 @@ const routes: Routes = [
   {path:"login",component:LoginComponent},
   {path:"forgot-password",component:ForgotpasswordComponent},
   {path:"admin-signup",component:AdminsignupComponent},
+  {path:"adminpage",component:AdminpageComponent,canActivate:[AuthGuard]},
   {path:"",redirectTo:'home', pathMatch:'full'},
   {path:"renew-password/:token",component:RenewpasswordComponent}
   
