@@ -14,7 +14,8 @@ import { error } from '@angular/compiler/src/util';
 })
 export class RenewpasswordComponent implements OnInit {
 
-
+  pass:string="";
+  confirmpass:string="";
   warnMessage:string="";
   renewPasswordForm : FormGroup;
   renewpasswordRequestPayload:RenewpasswordRequestPayload;
@@ -42,7 +43,6 @@ export class RenewpasswordComponent implements OnInit {
       confirmpassword: new FormControl('',Validators.required)
     });
 
-
   }
 
 
@@ -50,19 +50,37 @@ export class RenewpasswordComponent implements OnInit {
   renewPassword(){
 
     const token:string = this.activatedRoute.snapshot.paramMap.get('token');
+    //console.log(token);
 
-    console.log(token);
-    this.renewpasswordRequestPayload.password = this.renewPasswordForm.get('password').value;
+    
 
-    this.authService.renewPassword(token,this.renewpasswordRequestPayload).subscribe(data => {
+    this.pass = this.renewPasswordForm.get('password').value;
+    this.confirmpass = this.renewPasswordForm.get('confirmpassword').value
+    
+    if(this.pass == this.confirmpass){
 
-      this.toastr.success('Password reseted with new password');
-      //this.router.navigateByUrl('');
-    },error => {
+      this.warnMessage = 'Passwords not same';
+      
+      this.renewpasswordRequestPayload.password = this.renewPasswordForm.get('password').value;
 
-      this.toastr.error('Problem occured! Please try again later');
-      throwError(error);
-    });
+      this.authService.renewPassword(token,this.renewpasswordRequestPayload).subscribe(data => {
+
+        this.toastr.success('Password reseted with new password');
+        //this.router.navigateByUrl('');
+      },error => {
+
+        this.toastr.error('Problem occured! Please try again later');
+        throwError(error);
+      });
+
+    }else{
+
+         
+      this.warnMessage = 'Passwords not same';
+
+    }
+
+ 
 
   }
 
