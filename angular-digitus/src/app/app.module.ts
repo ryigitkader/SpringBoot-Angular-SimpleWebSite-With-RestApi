@@ -15,6 +15,7 @@ import { LoginComponent } from './auth/login/login.component';
 import { HomeComponent } from './home/home.component';
 import { ForgotpasswordComponent } from './auth/forgotpassword/forgotpassword.component';
 import { RenewpasswordComponent } from './renewpassword/renewpassword.component';
+import { AdminsignupComponent } from './auth/adminsignup/adminsignup.component';
 
 @NgModule({
   declarations: [
@@ -24,7 +25,8 @@ import { RenewpasswordComponent } from './renewpassword/renewpassword.component'
     LoginComponent,
     HomeComponent,
     ForgotpasswordComponent,
-    RenewpasswordComponent
+    RenewpasswordComponent,
+    AdminsignupComponent
   ],
   imports: [
     BrowserModule,

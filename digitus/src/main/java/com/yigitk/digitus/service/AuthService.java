@@ -41,6 +41,31 @@ public class AuthService {
                 .orElseThrow(() -> new DigitusException("User name not found - " + principal.getUsername()));
     }
 
+    public void adminSignup(RegisterRequest registerRequest) {
+
+        User user = new User();
+        user.setUsername(registerRequest.getUsername());
+        user.setName(registerRequest.getName());
+        user.setSurname(registerRequest.getSurname());
+        user.setPassword(passwordEncoder.encode(registerRequest.getPassword()));
+        user.setEmail(registerRequest.getEmail());
+        user.setCreatedDate(Instant.now());
+        user.setEnabled(false);
+        user.setAdmin(true);
+
+        userRepository.save(user);
+
+        String token = generateVerificationToken(user);
+
+        mailService.sendMail(new NotificationMail("Please Activate your account",user.getEmail(),
+                "Thank you for signing up to Digitus, " +
+                        "please click on the below url to activate your account : " +
+                        "http://localhost:8080/api/auth/accountVerification/"+token+" "));
+
+
+    }
+
+
     @Transactional
     public void signup(RegisterRequest registerRequest){
 
@@ -191,4 +216,6 @@ public class AuthService {
                 .username(refreshTokenRequest.getUsername())
                 .build();
     }
+
+
 }

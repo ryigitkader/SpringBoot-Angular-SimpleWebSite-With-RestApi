@@ -1,13 +1,14 @@
 import { Injectable, Output, EventEmitter } from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import { SignupRequestPayload } from '../signup/signup-request.payload';
-import { Observable } from 'rxjs';
+import { Observable, throwError } from 'rxjs';
 import { LoginRequestPayload } from '../login/login-request.payload';
 import { LoginResponsePayload } from '../login/login-response.payload';
 import {LocalStorageService} from 'ngx-webstorage';
 import { map, tap } from 'rxjs/operators';
 import { ForgotpasswordRequestPayload } from '../forgotpassword/forgotpassword-request.payload';
 import { RenewpasswordRequestPayload } from 'src/app/renewpassword/renewpassword-request.payload';
+import { error } from '@angular/compiler/src/util';
 
 @Injectable({
   providedIn: 'root'
@@ -36,6 +37,12 @@ export class AuthService {
     return this.httpClient.post(this.url+"signup",signupRequestPayload,{responseType:'text'});
   }
 
+  adminSignup(signupRequestPayload:SignupRequestPayload):Observable<any>{
+
+    return this.httpClient.post(this.url+"adminSignup",signupRequestPayload,{responseType:'text'});
+  }
+
+
   login(loginRequestPayload:LoginRequestPayload):Observable<boolean>{
 
     return this.httpClient.post<LoginResponsePayload>(this.url+"login",loginRequestPayload)
@@ -45,8 +52,7 @@ export class AuthService {
         this.localStorage.store('refreshToken',data.refreshToken);
         this.localStorage.store('username',data.username);
         this.localStorage.store('expiresAt',data.expiresAt);
-        
-
+  
         this.loggedIn.emit(true);
 
         if(data.admin){
@@ -77,6 +83,21 @@ export class AuthService {
   }
 
 
+  logout(){
+    
+    this.httpClient.post(this.url+"logout",this.refreshTokenPayload,
+    {responseType:'text'}).subscribe(data =>{
+      console.log(data);
+    },error =>{
+      throwError(error);
+    });
+
+    this.localStorage.clear('authenticationToken');
+    this.localStorage.clear('username');
+    this.localStorage.clear('refreshToken');
+    this.localStorage.clear('expiresAt');
+
+  }
 
 
 

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { SignupRequestPayload } from './signup-request.payload';
+import { SignupRequestPayload } from '../signup/signup-request.payload';
 import { AuthService } from '../shared/auth.service';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
@@ -8,22 +8,25 @@ import { error } from '@angular/compiler/src/util';
 
 
 
+
 @Component({
-  selector: 'app-signup',
-  templateUrl: './signup.component.html',
-  styleUrls: ['./signup.component.css']
+  selector: 'app-adminsignup',
+  templateUrl: './adminsignup.component.html',
+  styleUrls: ['./adminsignup.component.css']
 })
-export class SignupComponent implements OnInit {
+export class AdminsignupComponent implements OnInit {
+
 
   signupRequestPayload:SignupRequestPayload;
   signupForm:FormGroup;
 
-
   constructor(
+
     private authService:AuthService,
     private router:Router, 
     private toastr:ToastrService
-    ) {
+
+  ) { 
 
     this.signupRequestPayload = {
       email: '',
@@ -34,8 +37,7 @@ export class SignupComponent implements OnInit {
   
     };
 
-
-   }
+  }
 
   ngOnInit(): void {
 
@@ -49,6 +51,7 @@ export class SignupComponent implements OnInit {
   }
 
 
+
   signup(){
     this.signupRequestPayload.email = this.signupForm.get('email').value;
     this.signupRequestPayload.username = this.signupForm.get('username').value;
@@ -57,7 +60,7 @@ export class SignupComponent implements OnInit {
     this.signupRequestPayload.password = this.signupForm.get('password').value;
 
 
-    this.authService.signup(this.signupRequestPayload)
+    this.authService.adminSignup(this.signupRequestPayload)
                     .subscribe(data => {
                      this.toastr.success("Registration successfull"); 
                      this.router.navigate(['/login'],
