@@ -118,6 +118,17 @@ export class AuthService {
     return this.httpClient.get(this.url+"notactivateuser",{responseType:'text'});
   }
 
+  verificatedUsers():Observable<any>{
+
+    return this.httpClient.get(this.url+"activateduser",{responseType:'text'});
+  }
+
+
+  averageLoginTime():Observable<any>{
+
+    return this.httpClient.get(this.url+"averagelogintime",{responseType:'text'});
+  }
+
 
   
   getJwtToken(){

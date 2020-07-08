@@ -17,10 +17,11 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.Duration;
 import java.time.Instant;
-import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
+import java.util.*;
 
 @AllArgsConstructor
 @Service
@@ -175,7 +176,7 @@ public class AuthService {
         User user = userRepository.findByUsername(username)
                 .orElseThrow(() -> new DigitusException("No user found with name - " + username));
         user.setEnabled(true);
-
+        user.setActivatedDate(Instant.now());
         userRepository.save(user);
     }
 
@@ -183,6 +184,7 @@ public class AuthService {
 
 
 
+    @Transactional
     public AuthenticationResponse login(LoginRequest loginRequest) {
 
         Authentication authenticate = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(
@@ -192,6 +194,12 @@ public class AuthService {
 
 
         String token = jwtProvider.generateToken(authenticate);
+        User userForMail = getCurrentUser();
+        if(userForMail.getFirstLogin() == null){
+            userForMail.setFirstLogin(Instant.now());
+            userRepository.save(userForMail);
+        }
+
 
         return AuthenticationResponse.builder()
                 .authenticationToken(token)
@@ -228,11 +236,74 @@ public class AuthService {
         List<User> users = userRepository.findByEnabled(enabled)
                 .orElseThrow(() -> new DigitusException("No unregistered user "));
 
-        System.out.println(users);
-        return users.size();
+        if(users == null){
 
+            return 0;
+        }else{
+
+            // ADD 24 hours control
+            System.out.println(users);
+            return users.size();
+        }
 
     }
 
 
+    public int activatedUser() throws ParseException {
+
+        // !! REFACTOR LATER
+
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        boolean enabled=true;
+
+        List<User> users = userRepository.findByEnabled(enabled)
+                .orElseThrow(() -> new DigitusException("No unregistered user "));
+
+        if(users != null){
+
+            final  long MILLIS_PER_DAY = 24 * 60 * 60 * 1000L;
+
+            ArrayList<User> newUserList = new ArrayList<>();
+
+            for (User user: users) {
+
+                Date date1 = sdf.parse(user.getActivatedDate().toString());
+                Date date2 = sdf.parse(user.getCreatedDate().toString());
+                boolean moreThanDay = Math.abs(date1.getTime()-date2.getTime()) < MILLIS_PER_DAY;
+                if(moreThanDay){
+                    newUserList.add(user);
+                }
+            }
+
+
+            System.out.println(users);
+            return newUserList.size();
+
+        }
+        else{
+            return 0;
+        }
+
+
+    }
+
+    public Long averageLoginTime() {
+
+        boolean enabled = true;
+        List<User> users = userRepository.findByEnabled(enabled)
+                .orElseThrow(() -> new DigitusException("No unregistered user "));
+
+        Long ns = null;
+
+        for(User user : users){
+            if(user.getFirstLogin()!=null){
+                //ns = Duration.between(user.getCreatedDate(),user.getFirstLogin()).toHours();
+                ns = Duration.between(user.getCreatedDate(),user.getFirstLogin()).toMinutes();
+                return ns;
+            }
+        }
+
+
+        return ns;
+    }
 }

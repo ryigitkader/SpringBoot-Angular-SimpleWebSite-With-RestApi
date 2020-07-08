@@ -41,6 +41,10 @@ public class User {
 
     private Instant createdDate;
 
+    private Instant activatedDate;
+
+    private Instant firstLogin;
+
     private boolean enabled;
 
     private boolean admin;

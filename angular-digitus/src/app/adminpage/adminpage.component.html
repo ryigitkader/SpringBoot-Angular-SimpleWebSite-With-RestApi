@@ -1,27 +1,64 @@
 <div class="adminpage">
 
-    <div class="alert alert-primary ">
-        <h3 style="color:black;" class="center"><b>  Admin Panel </b></h3>
+   
 
-    </div>
-    <div class="">
-        <div class="">
-            <table class="table ">
-                <thead class="">
-                    
-                    <th scope="col">Online Users</th>
-                    <th scope="col">Unverificated Users</th>
-                    <th scope="col">Login Time(Average)</th>
-                </thead>
-                <thead>
-                    
-                    <th scope="col">{{onlineUsers}}</th>
-                    <th scope="col">{{unverificatedUsers}}</th>
-                    <th scope="col">-</th>
-                </thead>
-            </table>
+    <div class="jumbotron">
+        <div class="row">
+            <div class="col-md-9">
+                <h3 style="color:black;"> Admin Panel </h3>
+            </div>
+            <div class="col-md-3"><button (click)="refresh()" class="float-right refresh mr-2">&#8635; Refresh</button>
+            </div>
         </div>
-       
+        <div style="padding: 5rem;" class="row">
+
+        </div>
+        <hr>
+        <div class="row">
+            <div class="card-group">
+
+
+                <div class="col-md-3">
+                    <div class="card text-white bg-info mb-3" style="max-width: 18rem; min-width:19rem; min-height:14rem;">
+                        <div class="card-header">Online Number of users</div>
+                        <div class="card-body">
+                            <h5 class="card-title">Total number of online users</h5>
+                            <p class="card-text"> -> {{onlineUsers}}</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="card text-white bg-success mb-3" style="max-width: 18rem;  min-width:19rem; min-height:14rem;">
+                        <div class="card-header">Verificated users</div>
+                        <div class="card-body">
+                            <h5 class="card-title">Total number of users successfully registered in time period(24 hours)</h5>
+                            <p class="card-text"> -> {{verificatedUsers}}</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="card text-white bg-warning mb-3" style="max-width: 18rem;  min-width:19rem; min-height:14rem;">
+                        <div class="card-header">Unverificated Users</div>
+                        <div class="card-body">
+                            <h5 class="card-title">Total number of users didnt activate their accounts</h5>
+                            <p class="card-text"> -> {{unverificatedUsers}}</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="card text-white bg-primary mb-3" style="max-width: 18rem;  min-width:19rem; min-height:14rem;">
+                        <div class="card-header">Login Time(Average)</div>
+                        <div class="card-body">
+                            <h5 class="card-title">Total average time(minute) of users registration to login process</h5>
+                            <p class="card-text"> -> {{averageLoginTime}}</p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
     </div>
 
 </div>

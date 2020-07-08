@@ -10,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.text.ParseException;
 
 @RestController
 @RequestMapping("api/auth")
@@ -97,6 +98,18 @@ public class AuthController {
     public int notActivateUser(){
 
         return authService.notActivatedUser();
+    }
+
+    @GetMapping("/activateduser")
+    public int activatedUser() throws ParseException {
+
+        return authService.activatedUser();
+    }
+
+    @GetMapping("/averagelogintime")
+    public Long averageLoginTime(){
+
+        return  authService.averageLoginTime();
     }
 
 

@@ -10,15 +10,25 @@ import { throwError } from 'rxjs';
 })
 export class AdminpageComponent implements OnInit {
 
-  onlineUsers: string;
+  onlineUsers: string ;
+  
+
   unverificatedUsers: string;
+  
+  
+  verificatedUsers:string;
+
+  averageLoginTime:string;
+  
+
 
   constructor(private authService: AuthService) { }
 
   ngOnInit(): void {
 
-    this.logged();
-    this.unregistered();
+
+    this.refresh();
+    
   }
 
 
@@ -27,18 +37,12 @@ export class AdminpageComponent implements OnInit {
     this.authService.logged().subscribe(data => {
 
       this.onlineUsers = data;
+ 
       //console.log("calisti")
     }, error => {
       this.onlineUsers = "Suan erişilemiyor";
       throwError(error);
     });
-
-    setTimeout(() => {
-
-      this.logged();
-      
-
-    }, 100);
 
 
   }
@@ -48,24 +52,55 @@ export class AdminpageComponent implements OnInit {
 
     this.authService.unregisteredUsers().subscribe(data => {
       this.unverificatedUsers = data;
+
       //alert(data)
       //console.log("unregistered users : " + data);
     }, error => {
 
-      this.unverificatedUsers = "Suan erişilemiyor";
+      this.unverificatedUsers = "0";
       throwError(error);
     });
 
-    setTimeout(() => {
-
-      this.unregistered();
-      
-
-    }, 100);
-    
+  
 
   }
 
+
+  activated() {
+
+    this.authService.verificatedUsers().subscribe(data => {
+      
+      this.verificatedUsers = data;
+      //alert(data)
+      //console.log("unregistered users : " + data);
+    }, error => {
+
+      this.verificatedUsers = "Suan erişilemiyor";
+      throwError(error);
+    });
+
+
+
+  }
+
+  averageTime(){
+
+    this.authService.averageLoginTime().subscribe(data => {
+      this.averageLoginTime = data;
+      console.log(data);
+    },error => {
+      console.log("hata");
+      throwError(error);
+    })
+  }
+
+
+  refresh(){
+    this.activated();
+    this.unregistered();
+    this.logged();
+    this.averageTime();
+  }
 
 
 
