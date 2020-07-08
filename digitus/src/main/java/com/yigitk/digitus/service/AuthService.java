@@ -18,6 +18,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.Instant;
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -216,6 +217,21 @@ public class AuthService {
                 .username(refreshTokenRequest.getUsername())
                 .admin(getCurrentUser().isAdmin())
                 .build();
+    }
+
+
+
+    public int notActivatedUser(){
+
+        boolean enabled=false;
+
+        List<User> users = userRepository.findByEnabled(enabled)
+                .orElseThrow(() -> new DigitusException("No unregistered user "));
+
+        System.out.println(users);
+        return users.size();
+
+
     }
 
 

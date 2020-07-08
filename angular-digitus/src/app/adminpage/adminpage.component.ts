@@ -11,12 +11,14 @@ import { throwError } from 'rxjs';
 export class AdminpageComponent implements OnInit {
 
   onlineUsers: string;
+  unverificatedUsers: string;
 
   constructor(private authService: AuthService) { }
 
   ngOnInit(): void {
 
     this.logged();
+    this.unregistered();
   }
 
 
@@ -27,16 +29,40 @@ export class AdminpageComponent implements OnInit {
       this.onlineUsers = data;
       //console.log("calisti")
     }, error => {
-      this.onlineUsers = "Suan erilemiyor";
+      this.onlineUsers = "Suan erişilemiyor";
       throwError(error);
     });
 
     setTimeout(() => {
 
       this.logged();
+      
 
     }, 100);
 
+
+  }
+
+
+  unregistered() {
+
+    this.authService.unregisteredUsers().subscribe(data => {
+      this.unverificatedUsers = data;
+      //alert(data)
+      //console.log("unregistered users : " + data);
+    }, error => {
+
+      this.unverificatedUsers = "Suan erişilemiyor";
+      throwError(error);
+    });
+
+    setTimeout(() => {
+
+      this.unregistered();
+      
+
+    }, 100);
+    
 
   }
 

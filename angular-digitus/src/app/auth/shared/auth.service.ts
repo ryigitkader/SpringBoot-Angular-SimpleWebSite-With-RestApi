@@ -113,6 +113,13 @@ export class AuthService {
   }
 
 
+  unregisteredUsers():Observable<any>{
+
+    return this.httpClient.get(this.url+"notactivateuser",{responseType:'text'});
+  }
+
+
+  
   getJwtToken(){
 
     return this.localStorage.retrieve('authenticationToken');
@@ -139,6 +146,7 @@ export class AuthService {
   getUserName() {
     return this.localStorage.retrieve('username');
   }
+
   getRefreshToken() {
     return this.localStorage.retrieve('refreshToken');
   }

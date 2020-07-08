@@ -93,6 +93,12 @@ public class AuthController {
         return sessionCounter.getActiveSessionNumber();
     }
 
+    @GetMapping("/notactivateuser")
+    public int notActivateUser(){
+
+        return authService.notActivatedUser();
+    }
+
 
 
 
