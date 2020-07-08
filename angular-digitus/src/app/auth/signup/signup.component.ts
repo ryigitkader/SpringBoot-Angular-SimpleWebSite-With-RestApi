@@ -61,7 +61,7 @@ export class SignupComponent implements OnInit {
                     .subscribe(data => {
                      this.toastr.success("Registration successfull"); 
                      this.router.navigate(['/login'],
-                     {queryParams:{registered:true}});
+                     {queryParams:{ registered:'true' }});
                     }, error => {
                       console.log('Registration Failed')
                        this.toastr.error('Registration Failed, use different credentials');

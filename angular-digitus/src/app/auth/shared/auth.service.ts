@@ -26,6 +26,7 @@ export class AuthService {
   @Output() loggedIn: EventEmitter<boolean> = new EventEmitter();
   @Output() admin: EventEmitter<boolean> = new EventEmitter();
 
+  
 
   constructor(private httpClient:HttpClient, private localStorage:LocalStorageService) { 
 
@@ -52,11 +53,15 @@ export class AuthService {
         this.localStorage.store('refreshToken',data.refreshToken);
         this.localStorage.store('username',data.username);
         this.localStorage.store('expiresAt',data.expiresAt);
+        
   
+        console.log("admin data : " + data.admin);
+
         this.loggedIn.emit(true);
 
         if(data.admin){
           
+          this.localStorage.store('admin',data.admin);
           this.admin.emit(true)
        
         }else{
@@ -96,6 +101,8 @@ export class AuthService {
     this.localStorage.clear('username');
     this.localStorage.clear('refreshToken');
     this.localStorage.clear('expiresAt');
+    this.localStorage.clear('admin');
+    
 
   }
 
@@ -134,5 +141,11 @@ export class AuthService {
 
   isLoggedIn(): boolean {
     return this.getJwtToken() != null;
+  }
+
+  isAdmin():boolean{
+
+  
+    return this.localStorage.retrieve('admin') != null;
   }
 }

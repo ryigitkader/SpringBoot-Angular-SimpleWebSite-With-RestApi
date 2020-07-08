@@ -16,7 +16,7 @@ export class LoginComponent implements OnInit {
 
   loginForm:FormGroup;
   loginRequestPayload:LoginRequestPayload;
-  registerSuccessMessage: string;
+  registerSuccessMessage: string="";
   isError: boolean;
 
   constructor(

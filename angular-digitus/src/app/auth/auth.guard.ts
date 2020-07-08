@@ -7,8 +7,8 @@ import { AuthService } from './shared/auth.service';
   providedIn: 'root'
 })
 export class AuthGuard implements CanActivate {
-  isAdmin: boolean;
-
+  
+  
   constructor(private authService:AuthService,private router:Router){}
 
   canActivate(
@@ -18,11 +18,11 @@ export class AuthGuard implements CanActivate {
       
 
       const isAuthenticated = this.authService.isLoggedIn();
-
+      const isAdmin = this.authService.isAdmin();
+    
+      //alert(isAdmin);
       
-      this.authService.admin.subscribe((data: boolean) => this.isAdmin = data);
-      
-      if(isAuthenticated && this.isAdmin){
+      if(isAuthenticated == true && isAdmin==true){
         return true;
       }else{
         this.router.navigateByUrl('');

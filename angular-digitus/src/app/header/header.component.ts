@@ -19,17 +19,16 @@ export class HeaderComponent implements OnInit {
     this.isLoggedIn = this.authService.isLoggedIn();
 
     this.authService.admin.subscribe((data: boolean) => this.isAdmin = data);
-    
-
+    this.isAdmin =  this.authService.isAdmin();
 
   }
 
 
   logout(){
-    this.authService.logout();
     this.isLoggedIn=false;
     this.isAdmin = false;
     this.router.navigateByUrl("");
-    window.location.reload();
+    this.authService.logout();
+    //window.location.reload();
   }
 }

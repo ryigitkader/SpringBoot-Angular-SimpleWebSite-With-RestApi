@@ -214,6 +214,7 @@ public class AuthService {
                 .refreshToken(refreshTokenRequest.getRefreshToken())
                 .expiresAt(Instant.now().plusMillis(jwtProvider.getJwtExpirationInMillis()))
                 .username(refreshTokenRequest.getUsername())
+                .admin(getCurrentUser().isAdmin())
                 .build();
     }
 
