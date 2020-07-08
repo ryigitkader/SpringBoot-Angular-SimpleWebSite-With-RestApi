@@ -31,7 +31,7 @@ export class HeaderComponent implements OnInit {
     this.isAdmin = false;
     this.router.navigateByUrl("");
     this.authService.logout();
-    //window.location.reload();
+    window.location.reload();
   }
 
 
