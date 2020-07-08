@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../auth/shared/auth.service';
 import { Router } from '@angular/router';
+import { error } from '@angular/compiler/src/util';
+import { throwError } from 'rxjs';
 
 @Component({
   selector: 'app-header',
@@ -30,5 +32,17 @@ export class HeaderComponent implements OnInit {
     this.router.navigateByUrl("");
     this.authService.logout();
     //window.location.reload();
+  }
+
+
+  logged(){
+
+    this.authService.logged().subscribe(data => {
+
+      console.log("logged: "+data);
+    },error => {
+      console.log("hata logged");
+      throwError(error);
+    })
   }
 }

@@ -107,6 +107,11 @@ export class AuthService {
   }
 
 
+  logged():Observable<any>{
+    
+    return this.httpClient.get(this.url+"logged",{responseType:'text'});
+  }
+
 
   getJwtToken(){
 

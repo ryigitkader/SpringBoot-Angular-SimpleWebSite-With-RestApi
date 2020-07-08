@@ -3,6 +3,7 @@ package com.yigitk.digitus.controller;
 import com.yigitk.digitus.dto.*;
 import com.yigitk.digitus.service.AuthService;
 import com.yigitk.digitus.service.RefreshTokenService;
+import com.yigitk.digitus.store.SessionCounter;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,6 +18,8 @@ public class AuthController {
 
     private final AuthService authService;
     private final RefreshTokenService refreshTokenService;
+
+    private final SessionCounter sessionCounter;
 
     @PostMapping("/signup")
     public ResponseEntity<String> signup(@RequestBody RegisterRequest registerRequest){
@@ -81,6 +84,13 @@ public class AuthController {
         refreshTokenService.deleteRefreshToken(refreshTokenRequest.getRefreshToken());
 
         return ResponseEntity.status(HttpStatus.OK).body("Refresh token deleted successfully");
+    }
+
+
+    @GetMapping("/logged")
+    public int loggedUsers(){
+
+        return sessionCounter.getActiveSessionNumber();
     }
 
 

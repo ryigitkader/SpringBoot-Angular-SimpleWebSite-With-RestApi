@@ -1,5 +1,6 @@
 package com.yigitk.digitus.config;
 
+import com.yigitk.digitus.store.SessionCounter;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -47,6 +48,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .passwordEncoder(passwordEncoder());
     }
 
+
+
+    @Bean
+    SessionCounter sessionCounter(){
+        return  new SessionCounter();
+    }
 
 
     @Bean

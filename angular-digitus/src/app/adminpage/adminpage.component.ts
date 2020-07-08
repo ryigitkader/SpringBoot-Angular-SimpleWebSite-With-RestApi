@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { AuthService } from '../auth/shared/auth.service';
+import { error } from '@angular/compiler/src/util';
+import { throwError } from 'rxjs';
 
 @Component({
   selector: 'app-adminpage',
@@ -7,9 +10,29 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AdminpageComponent implements OnInit {
 
-  constructor() { }
+  onlineUsers:string;
+
+  constructor(private authService:AuthService) { }
 
   ngOnInit(): void {
+
+    this.logged();
   }
+
+
+  logged(){
+
+    this.authService.logged().subscribe(data => {
+
+      this.onlineUsers = data;
+    },error => {
+      this.onlineUsers = "Suan erilemiyor";
+      throwError(error);
+    })
+
+  }
+
+  
+  
 
 }
