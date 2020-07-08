@@ -10,9 +10,9 @@ import { throwError } from 'rxjs';
 })
 export class AdminpageComponent implements OnInit {
 
-  onlineUsers:string;
+  onlineUsers: string;
 
-  constructor(private authService:AuthService) { }
+  constructor(private authService: AuthService) { }
 
   ngOnInit(): void {
 
@@ -20,19 +20,27 @@ export class AdminpageComponent implements OnInit {
   }
 
 
-  logged(){
+  logged() {
 
     this.authService.logged().subscribe(data => {
 
       this.onlineUsers = data;
-    },error => {
+      //console.log("calisti")
+    }, error => {
       this.onlineUsers = "Suan erilemiyor";
       throwError(error);
-    })
+    });
+
+    setTimeout(() => {
+
+      this.logged();
+
+    }, 100);
+
 
   }
 
-  
-  
+
+
 
 }
