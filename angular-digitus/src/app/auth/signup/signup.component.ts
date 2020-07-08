@@ -59,7 +59,7 @@ export class SignupComponent implements OnInit {
 
     this.authService.signup(this.signupRequestPayload)
                     .subscribe(data => {
-                     this.toastr.success("Registration successfull"); 
+                     this.toastr.success("Registration successfull, Check your activation mail before login"); 
                      this.router.navigate(['/login'],
                      {queryParams:{ registered:'true' }});
                     }, error => {

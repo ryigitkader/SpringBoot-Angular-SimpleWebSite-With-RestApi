@@ -56,11 +56,10 @@ export class RenewpasswordComponent implements OnInit {
 
     this.pass = this.renewPasswordForm.get('password').value;
     this.confirmpass = this.renewPasswordForm.get('confirmpassword').value
-    
-    if(this.pass == this.confirmpass){
-
-      this.warnMessage = 'Passwords not same';
       
+
+    //!!CHECK PASSWORDS
+
       this.renewpasswordRequestPayload.password = this.renewPasswordForm.get('password').value;
 
       this.authService.renewPassword(token,this.renewpasswordRequestPayload).subscribe(data => {
@@ -72,13 +71,6 @@ export class RenewpasswordComponent implements OnInit {
         this.toastr.error('Problem occured! Please try again later');
         throwError(error);
       });
-
-    }else{
-
-         
-      this.warnMessage = 'Passwords not same';
-
-    }
 
  
 

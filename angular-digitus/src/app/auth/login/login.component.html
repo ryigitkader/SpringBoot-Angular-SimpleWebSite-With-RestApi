@@ -35,7 +35,7 @@
                             <span style="padding-left: 15px"> <a style="color: blue;" routerLink="/forgot-password">Forgot password ?</a></span>
                         </span>   
                         <div class="login-failed" *ngIf='this.isError'>
-                             <p class="login-failed-text">Login Failed. Please check your credentials and try again.</p>   
+                             <p class="login-failed-text">Login Failed. Please check your credentials and activate your account.</p>   
                         </div>      
                         <div class="login-failed"  [ngStyle]="{'background-color':'green'}" *ngIf="this.registerSuccessMessage != '' " >
                             <p class="login-failed-text">{{registerSuccessMessage}}</p>   
