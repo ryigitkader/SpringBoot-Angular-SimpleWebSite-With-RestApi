@@ -14,6 +14,9 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
+import javax.servlet.http.HttpSessionAttributeListener;
+import javax.servlet.http.HttpSessionBindingEvent;
+
 @EnableWebSecurity
 @AllArgsConstructor
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
@@ -54,6 +57,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     SessionCounter sessionCounter(){
         return  new SessionCounter();
     }
+
 
 
     @Bean

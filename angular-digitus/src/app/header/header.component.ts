@@ -35,14 +35,4 @@ export class HeaderComponent implements OnInit {
   }
 
 
-  logged(){
-
-    this.authService.logged().subscribe(data => {
-
-      console.log("logged: "+data);
-    },error => {
-      console.log("hata logged");
-      throwError(error);
-    })
-  }
 }
