@@ -8,10 +8,14 @@ import org.springframework.scheduling.annotation.EnableAsync;
 @SpringBootApplication
 @EnableAsync
 @ServletComponentScan
-public class DigitusApplication {
+public class DigitusApplication  {
+
+	/**
+	 * @Author Yigit Recep Kader
+	 */
 
 	public static void main(String[] args) {
-		SpringApplication.run(DigitusApplication.class, args);
+		SpringApplication.run(DigitusApplication.class,args);
 	}
 
 }
