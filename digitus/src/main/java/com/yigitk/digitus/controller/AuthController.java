@@ -3,12 +3,10 @@ package com.yigitk.digitus.controller;
 import com.yigitk.digitus.dto.*;
 import com.yigitk.digitus.service.AuthService;
 import com.yigitk.digitus.service.RefreshTokenService;
-import com.yigitk.digitus.service.UserDetailsServiceImpl;
 import com.yigitk.digitus.store.SessionCounter;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -23,6 +21,7 @@ public class AuthController {
     private final RefreshTokenService refreshTokenService;
 
     private final SessionCounter sessionCounter;
+
 
 
     @PostMapping("/signup")
@@ -96,6 +95,7 @@ public class AuthController {
     public int loggedUsers(){
 
         return sessionCounter.getActiveSessionNumber();
+
     }
 
     @GetMapping("/notactivateuser")

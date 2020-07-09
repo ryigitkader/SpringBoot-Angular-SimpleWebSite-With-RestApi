@@ -25,25 +25,24 @@ public class SessionCounter implements HttpSessionListener {
     private List<String> sessions = new ArrayList<>();
     public static final String COUNTER = "session-counter";
 
-
+    @Override
     public void sessionCreated(HttpSessionEvent event) {
         System.out.println("SessionCounter.sessionCreated");
         HttpSession session = event.getSession();
-        //event.getSession().setMaxInactiveInterval(1);
         sessions.add(session.getId());
-        session.setAttribute(SessionCounter.COUNTER, this);
+        //session.setAttribute(SessionCounter.COUNTER, this);
 
 
 
     }
 
 
+    @Override
     public void sessionDestroyed(HttpSessionEvent event) {
         System.out.println("SessionCounter.sessionDestroyed");
         HttpSession session = event.getSession();
-        //event.getSession().setMaxInactiveInterval(1);
         sessions.remove(session.getId());
-        session.setAttribute(SessionCounter.COUNTER, this);
+        //session.setAttribute(SessionCounter.COUNTER, this);
 
     }
 

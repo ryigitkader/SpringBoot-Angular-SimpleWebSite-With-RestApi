@@ -44,7 +44,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .authenticated();
 
 
-
     }
 
 
@@ -63,7 +62,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
 
-
     @Bean
     public SessionRegistry sessionRegistry() {
 
@@ -79,6 +77,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     SessionCounter sessionCounter(){
         return  new SessionCounter();
     }
+
+
+
 
 
 }
